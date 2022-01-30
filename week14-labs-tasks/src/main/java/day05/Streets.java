@@ -79,24 +79,28 @@ public class Streets {
             int evenNumber = 0;
             int oddNumber = -1;
             List<Integer> numbers = new ArrayList<>();
-            for (Integer actual : entry.getValue()) {
-                if (actual == 0) {
-                    evenNumber += 2;
-                    numbers.add(evenNumber);
-                } else {
-                    oddNumber += 2;
-                    numbers.add(oddNumber);
-                }
-            }
+            transferValues(entry, evenNumber, oddNumber, numbers);
             streets.put(entry.getKey(), new ArrayList<>(numbers));
+        }
+    }
+
+    private void transferValues(Map.Entry<String, List<Integer>> entry, int evenNumber, int oddNumber, List<Integer> numbers) {
+        for (Integer actual : entry.getValue()) {
+            if (actual == 0) {
+                evenNumber += 2;
+                numbers.add(evenNumber);
+            } else {
+                oddNumber += 2;
+                numbers.add(oddNumber);
+            }
         }
     }
 
 
     public static void main(String[] args) {
         Streets streets = new Streets();
-        //streets.streetMap(Path.of("src/main/resources/streets.txt"));
-        streets.readFromFile(Path.of("src/main/resources/streets.txt"));
+        streets.streetMap(Path.of("src/main/resources/streets.txt"));
+        //streets.readFromFile(Path.of("src/main/resources/streets.txt"));
 
         streets.streets.entrySet().stream().forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
 
